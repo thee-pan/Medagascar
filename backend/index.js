@@ -9,6 +9,7 @@ var morgan = require("morgan");
 var multer = require("multer");
 var path = require("path");
 const fs = require("fs");
+const { spawn } = require("child_process");
 
 const {
   RegisterUser,
@@ -130,9 +131,10 @@ app
       if (err) {
         res.redirect("/signup");
       } else {
-        console.log("This is ", docs);
         req.session.user = docs;
-        res.redirect("/profile");
+        console.log("This is ", docs);
+
+        res.redirect("/signin");
       }
     });
   });
@@ -201,12 +203,32 @@ app
   })
   .post(async (req, res) => {
     console.log(id);
-    var medicineName = req.body.medicine;
+    var medicineName = { med: req.body.medicine };
+    const jsonString = JSON.stringify(medicineName);
+    fs.writeFile("./file.json", jsonString, (err) => {
+      if (err) {
+        console.log("Error writing file", err);
+      } else {
+        console.log("Successfully wrote file");
+      }
+    });
+
+    fs.writeFileSync("./file.json", jsonString);
+
     var medicineData = Object.assign(id, req.body);
     console.log(medicineData);
     const data = new Medicine(medicineData);
     console.log(data);
     await data.save();
+
+    const pyProg = spawn("python", ["../scraper.py"]);
+
+    pyProg.stdout.on("data", function (data) {
+      console.log(data.toString());
+      res.write(data);
+      res.end("end");
+    });
+
     res.redirect("/profile");
   });
 
