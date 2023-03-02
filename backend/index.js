@@ -19,6 +19,9 @@ const {
   Medicine,
 } = require("./model/db");
 
+var imageDataFind = Upload.find({});
+
+var imgData = "";
 const app = express();
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/upload"));
@@ -131,17 +134,19 @@ app
       if (err) {
         res.redirect("/signup");
       } else {
-        req.session.user = docs;
-        console.log("This is ", docs);
-
         res.redirect("/signin");
       }
     });
   });
 
-app.route("/prescription").get((req, res) => {
+app.route("/prescription").get(async (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
-    res.render("prescriptions");
+    const imgData = await Upload.find({ userId: idString }, null).populate(
+      "imageDetails"
+    );
+    res.render("prescriptions", {
+      records: imgData,
+    });
   } else {
     res.redirect("/signin");
   }
@@ -221,14 +226,6 @@ app
     console.log(data);
     await data.save();
 
-    const pyProg = spawn("python", ["../scraper.py"]);
-
-    pyProg.stdout.on("data", function (data) {
-      console.log(data.toString());
-      res.write(data);
-      res.end("end");
-    });
-
     res.redirect("/profile");
   });
 
@@ -236,34 +233,34 @@ app
   .route("/uploadFiles")
   .get((req, res) => {
     if (req.session.user && req.cookies.user_sid) {
-      Upload.find({}, (err, data) => {
+      imageDataFind.exec(function (err, data) {
         if (err) throw err;
-        res.render("imageUpload", {
-          records: data,
-        });
+        res.render("imageUpload");
       });
     } else {
       res.redirect("/signin");
     }
   })
   .post(upload.single("file"), async (req, res) => {
-    var imageDetails = Object.assign(
+    var imageDetailsUpload = Object.assign(
       id,
       {
         imageDetails: req.file.filename,
       },
       { date: req.body.date }
     );
-    console.log(imageDetails);
 
-    const data = new Upload(imageDetails);
+    console.log("This is imagedetails 249", imageDetailsUpload);
+
+    const data = new Upload(imageDetailsUpload);
     await data.save();
+
+    console.log(data);
     if (req.session.user && req.cookies.user_sid) {
-      Upload.find({}, (err, data) => {
+      Upload.find({ _id: idString }, (err, data) => {
         if (err) throw err;
-        res.render("imageUpload", {
-          records: data,
-        });
+        imgData = data;
+        res.redirect("/prescription");
       });
     } else {
       res.redirect("/signin");
@@ -272,18 +269,22 @@ app
 
 app.get("/profile", async (req, res) => {
   console.log(idString);
+  idString = String(idString);
   if (req.session.user && req.cookies.user_sid) {
-    const user = await RegisterUser.findOne({ _id: idString }).populate("name");
+    const user = await RegisterUser.findOne({ _id: idString }, null).populate(
+      "name"
+    );
 
-    const allergydb = await Allergy.find({ UserId: idString }).populate(
+    const allergydb = await Allergy.find({ userId: idString }, null).populate(
       "allergy"
     );
 
     console.log(allergydb);
-    const familydb = await FamilyHistory.find({ UserId: idString }).populate(
-      "disease"
-    );
-    const medicinedb = await Medicine.find({ UserId: idString }).populate(
+    const familydb = await FamilyHistory.find(
+      { userId: idString },
+      null
+    ).populate("disease");
+    const medicinedb = await Medicine.find({ userId: idString }, null).populate(
       "medicine"
     );
 

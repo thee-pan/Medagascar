@@ -24,14 +24,22 @@
         </div>
         <div class="pres-upload">
             <ul>
-               <li><button class="u-button u-but" onclick="show()" id="btnID">XX-XX-XXXX</button></li>
-                <img id="image"
+              
+                <!-- <img id="image"
                     src="https://images.unsplash.com/photo-1675710640218-d5329c2fdba4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8"
-                    height="100" width="100">
-                
-                <li><button class="u-button u-but">XX-XX-XXXX</button></li>
-                <li><button class="u-button u-but">XX-XX-XXXX</button></li>
-                <li><button class="u-button u-but">XX-XX-XXXX</button></li>
+                    height="100" width="100"> -->
+
+                <div class="container">
+                    <div class="row">
+                        <%if (records.length>0){ %>
+                            <% records.forEach(function(row){ %>
+                                <div class="col-md-4">
+                                    <img src="/<%= row.imageDetails %>" alt="image" style="width:100px;margin:5px auto;">
+                                </div>
+                                <% }) }%>
+                    </div>
+                </div>
+             
             </ul>
             
         </div>
@@ -42,6 +50,7 @@
                 var x = document.getElementById("image");
                 if (x.style.display === "none") {
                     x.style.display = "block";
+                    console.log("entered show()")
                 } else {
                     x.style.display = "none";
                 }
