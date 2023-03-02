@@ -8,7 +8,6 @@
    </head>
    
    <body>
-   
       <div class="wrapper">
          <div class="sidebar">
             <div class="logo">
@@ -38,7 +37,7 @@
                                  <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius"
                                     alt="User-Profile-Image">
                               </div>
-                              <h1 class="f-w-500">Maggie Smith</h1>
+                              <h1 class="f-w-500"><%=user%></h1>
                               <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                            </div>
                         </div>
@@ -48,31 +47,47 @@
                               <div class="row">
                                  <div class="col-sm-6">
                                     <h3 class="m-b-10 f-w-600">Age</h3>
-                                    <h4 class="text-muted f-w-400">50</h4><br>
+                                    <h4 class="text-muted f-w-400"><%=age%></h4><br>
                                  </div>
                                  <div class="col-sm-6">
                                     <h3    class="m-b-10 f-w-600">Gender</h3>
-                                    <h4 class="text-muted f-w-400">98979989898</h4><br>
+                                    <h4 class="text-muted f-w-400"><%=gender%></h4><br>
                                  </div>
                               </div>
    
                               <div class="row">
                                  <div class="col-sm-6">
                                     <h3 class="m-b-10 f-w-600">Allergies:</h3>
-                                    <h4 class="text-muted f-w-400">Sam Disuja</h4><br>
+                                    <% allergies.forEach(function(allergy){ %>
+                                       <h4 class="text-muted f-w-400"><%=allergy.allergy%></h4><br>
+                                    <% }); %>
                                  </div>
                                  <div class="col-sm-6">
                                     <h3 class="m-b-10 f-w-600">Medicines on:</h3>
-                                    <h4 class="text-muted f-w-400">Sam Disuja</h4><br>
+                                    <% medicines.forEach(function(medicine){ %>
+                                       <h4 class="text-muted f-w-400">
+                                          <%=medicine.medicine%>
+                                       </h4><br>
+                                       <% }); %>
                                  </div>
                                  <div class="col-sm-6">
                                     <h3 class="m-b-10 f-w-600">Family History:</h3>
-                                    <h4 class="text-muted f-w-400">Dinoter husainm</h4><br>
+                                    <% family.forEach(function(fam){ %>
+                                       <h4 class="text-muted f-w-400">
+                                          <%=fam.disease%>
+                                       </h4><br>
+                                       <% }); %>
                                  </div>
-                                 <div class="col-sm-6">
-                                    <h3 class="m-b-10 f-w-600">Allergies:</h3>
-                                    <h4 class="text-muted f-w-400">Dinoter husainm</h4><br>
-                                 </div>
+
+                                 <!-- <div class="col-sm-6">
+                                    <h3 class="m-b-10 f-w-600">Possible Diseases</h3>
+                                    <% family.forEach(function(fam){ %>
+                                       <h4 class="text-muted f-w-400">
+                                          <%=fam.disease%>
+                                       </h4><br>
+                                       <% }); %>
+                                 </div> -->
+                                 
                               </div>
                            </div>
                         </div>

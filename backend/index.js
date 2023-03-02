@@ -8,6 +8,8 @@ var session = require("express-session");
 var morgan = require("morgan");
 var multer = require("multer");
 var path = require("path");
+const fs = require("fs");
+
 const {
   RegisterUser,
   Allergy,
@@ -87,6 +89,8 @@ app.get("/", sessionChecker, function (req, res) {
 });
 
 var id = {};
+var idUser = "";
+var idString = "";
 
 app
   .route("/signin")
@@ -99,6 +103,10 @@ app
       if (check.password === req.body.password) {
         console.log("Password check completed");
         id = { userId: check._id };
+        idUser = JSON.stringify(id);
+        idString = idUser.substring(11, idUser.length - 2);
+        console.log(idString);
+        console.log(id);
         req.session.user = req.body;
         res.redirect("/profile");
       } else {
@@ -122,7 +130,7 @@ app
       if (err) {
         res.redirect("/signup");
       } else {
-        console.log(docs);
+        console.log("This is ", docs);
         req.session.user = docs;
         res.redirect("/profile");
       }
@@ -160,7 +168,7 @@ app
     const data = new Allergy(allergyData);
     console.log(data);
     await data.save();
-    res.send("Allergies updated");
+    res.redirect("/profile");
   });
 
 app
@@ -179,26 +187,27 @@ app
     const data = new FamilyHistory(familyData);
     console.log(data);
     await data.save();
-    res.send("Family History updated");
+    res.redirect("/profile");
   });
 
 app
   .route("/medicine")
   .get((req, res) => {
     if (req.session.user && req.cookies.user_sid) {
-      console.log("Connected to react");
+      res.render("medicineUpload");
     } else {
       res.redirect("/signin");
     }
   })
   .post(async (req, res) => {
     console.log(id);
+    var medicineName = req.body.medicine;
     var medicineData = Object.assign(id, req.body);
     console.log(medicineData);
     const data = new Medicine(medicineData);
     console.log(data);
     await data.save();
-    res.send("Medicine updated");
+    res.redirect("/profile");
   });
 
 app
@@ -239,9 +248,31 @@ app
     }
   });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
+  console.log(idString);
   if (req.session.user && req.cookies.user_sid) {
-    res.render("profile");
+    const user = await RegisterUser.findOne({ _id: idString }).populate("name");
+
+    const allergydb = await Allergy.find({ UserId: idString }).populate(
+      "allergy"
+    );
+
+    console.log(allergydb);
+    const familydb = await FamilyHistory.find({ UserId: idString }).populate(
+      "disease"
+    );
+    const medicinedb = await Medicine.find({ UserId: idString }).populate(
+      "medicine"
+    );
+
+    res.render("profile", {
+      user: user.name,
+      age: user.dob,
+      gender: user.gender,
+      allergies: allergydb,
+      family: familydb,
+      medicines: medicinedb,
+    });
   } else {
     console.log("Error in loading profile");
     res.redirect("/signin");

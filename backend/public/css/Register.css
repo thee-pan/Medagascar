@@ -1,59 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@30;400;500;600;700;800;900&display=swap');
-*
 
-{
-    margin:0;
-    padding:0;
-    box-sizing:border-box ;
-    font-family:'Poppins', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 
 }
-body{background-color:#0fc48b;}
 
-section
-{
+input[type=radio] {
+    border: 0px;
+    width: 10% !important;
+    height: 2em;
+}
+
+body {
+    background-color: #0fc48b;
+}
+
+section {
     position: relative;
-    width:100%;
+    width: 100%;
     height: 100vh;
     display: flex;
 }
 
-section .imgBX
-{
+section .imgBX {
     position: relative;
-    width: 30%;
+    width: 100%;
     height: 100%;
+
 }
 
-section .imgBx img
-{
+section .imgBx img {
     position: relative;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: fill;
+    box-sizing: content-box;
 
 }
 
-section .contentBx
-{
+section .contentBx {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height:100%;
-    
+    height: 100%;
+    padding-left: 50px;
+
+
 }
 
-section .contentBx .formBx
-{
-    width: 100%;
-    padding-left: 100px;
+section .contentBx .formBx {
+    width: 200%;
+    padding-left: 80px;
+    align-content: center;
+
+    box-sizing: 70x;
+
 }
 
-section .contentBx .formBx h2
-{
+
+
+section .contentBx .formBx h2 {
     color: #030507;
     font-weight: 600;
     font-size: 2.5em;
@@ -61,40 +73,44 @@ section .contentBx .formBx h2
     margin-bottom: 10px;
     display: inline-block;
     letter-spacing: 1px;
-    padding-inline-start: 150px;
-    padding-bottom: 30px;
+    padding: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 100px;
+
 
 }
 
-section .contentBx .formBx .inputBx
-{
+section .contentBx .formBx .inputBx {
     margin-bottom: 20px;
     box-sizing: inherit;
 }
 
-section .contentBx .formBx .inputBx span
-{
-    font-size: 30px;
-    display: inline-block;
-    color:#030507;
-    font-weight: 300;
-    font-size: 25px;
-    letter-spacing: 1px;
-
+label {
+    display: -webkit-inline-flex;
+    width: 100px;
+    position: relative;
+    margin: 0px;
+    padding: 5px;
 }
 
-section .contentBx .formBx .inputBx :-ms-input-placeholder
-{
+label>input[type=radio] {
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+
+section .contentBx .formBx .inputBx :-ms-input-placeholder {
     font-size: 50px;
     margin-left: 5px;
     display: inline-block;
     color: #030507;
     font-weight: 300;
     letter-spacing: 1px;
+    padding-right: 30px;
 }
 
-section .contentBx .formBx .inputBx input
-{
+section .contentBx .formBx .inputBx input {
     width: 50%;
     height: 50%;
     padding: 10px 20px;
@@ -103,21 +119,20 @@ section .contentBx .formBx .inputBx input
     border: 1px solid #0a0c0e;
     font-size: 16px;
     letter-spacing: 1px;
-    color:#030507;
+    color: #030507;
     background: transparent;
     border-radius: 5px;
     background-color: white;
-    resize:vertical;
+    resize: vertical;
     box-sizing: inherit;
 
 }
 
 
-section .contentBx .formBx .inputBx input[type="submit"]
-{
+section .contentBx .formBx .inputBx input[type="submit"] {
 
     background: white;
-    color:white;
+    color: white;
     outline: none;
     border: none;
     font-weight: 300;
@@ -128,25 +143,20 @@ section .contentBx .formBx .inputBx input[type="submit"]
 
 }
 
-section .contentBx .formBx .inputBx input[type="submit"]:hover
-{
+section .contentBx .formBx .inputBx input[type="submit"]:hover {
     background: #a39d9f;
 }
 
-section .contentbox .formBx .inputBx p
-{
+section .contentbox .formBx .inputBx p {
     color: #607d8b;
 }
 
-section .contentbox .formBx .inputBx p a
-{
+section .contentbox .formBx .inputBx p a {
     color: #e30c62;
 }
 
-@media (max-width: 768px)
-{
-    section .imgBx
-    {
+@media (max-width: 768px) {
+    section .imgBx {
         position: relative;
         top: 0;
         left: 0;
@@ -154,12 +164,11 @@ section .contentbox .formBx .inputBx p a
         height: 100%;
     }
 
-    section .contentBx
-    {
+    section .contentBx {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height:100%;
+        height: 100%;
     }
 }
