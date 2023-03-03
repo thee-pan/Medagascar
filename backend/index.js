@@ -141,9 +141,10 @@ app
 
 app.route("/prescription").get(async (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
-    const imgData = await Upload.find({ userId: idString }, null).populate(
-      "imageDetails"
-    );
+    const imgData = await Upload.find({ userId: idString }, null)
+      .populate("imageDetails")
+      .clone();
+
     res.render("prescriptions", {
       records: imgData,
     });
@@ -310,41 +311,72 @@ app.get("/logout", (req, res) => {
     res.redirect("/signin");
   }
 });
-console.log(idString);
-app.get(`/${idString}`, async (req, res) => {
-  if (req.session.user && req.cookies.user_sid) {
-    idString = String(idString);
-    if (req.session.user && req.cookies.user_sid) {
-      const user = await RegisterUser.findOne({ _id: idString }, null).populate(
-        "name"
-      );
 
-      const allergydb = await Allergy.find({ userId: idString }, null).populate(
-        "allergy"
-      );
+app.get("/emergency", (req, res) => {
+  res.redirect("/user/:" + idString);
+  console.log(idString);
+});
 
-      const familydb = await FamilyHistory.find(
-        { userId: idString },
-        null
-      ).populate("disease");
-      const medicinedb = await Medicine.find(
-        { userId: idString },
-        null
-      ).populate("medicine");
+// app.get("/user/:id" + idString, async (req, res) => {
+//   idString = String(idString);
+//   if (req.session.user && req.cookies.user_sid) {
+//     const user = await RegisterUser.findOne({ _id: idString }, null).populate(
+//       "name"
+//     );
 
-      res.render("url", {
-        user: user.name,
-        age: user.dob,
-        gender: user.gender,
-        allergies: allergydb,
-        family: familydb,
-        medicines: medicinedb,
-      });
-    } else {
-      console.log("Error in loading profile");
-      res.redirect("/signin");
-    }
-  }
+//     const allergydb = await Allergy.find({ userId: idString }, null).populate(
+//       "allergy"
+//     );
+
+//     const familydb = await FamilyHistory.find(
+//       { userId: idString },
+//       null
+//     ).populate("disease");
+//     const medicinedb = await Medicine.find({ userId: idString }, null).populate(
+//       "medicine"
+//     );
+
+//     res.render("url", {
+//       user: user.name,
+//       age: user.dob,
+//       gender: user.gender,
+//       allergies: allergydb,
+//       family: familydb,
+//       medicines: medicinedb,
+//     });
+//   } else {
+//     console.log("Error in loading profile");
+//     res.redirect("/signin");
+//   }
+// });
+
+app.get("/user/:id" + idString, async (req, res) => {
+  idString = String(req.params.id.substring(1, req.params.id.length));
+  console.log(idString);
+  const user = await RegisterUser.findOne({ _id: idString }, null).populate(
+    "name"
+  );
+
+  const allergydb = await Allergy.find({ userId: idString }, null).populate(
+    "allergy"
+  );
+
+  const familydb = await FamilyHistory.find(
+    { userId: idString },
+    null
+  ).populate("disease");
+  const medicinedb = await Medicine.find({ userId: idString }, null).populate(
+    "medicine"
+  );
+
+  res.render("url", {
+    user: user.name,
+    age: user.dob,
+    gender: user.gender,
+    allergies: allergydb,
+    family: familydb,
+    medicines: medicinedb,
+  });
 });
 
 app.use(function (req, res, next) {

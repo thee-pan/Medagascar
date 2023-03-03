@@ -2,8 +2,10 @@
 <title>Medagascar</title>
 <head>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
-    
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     
@@ -17,24 +19,23 @@
                     <li><a href="/upload"><i class="fas fa-upload"></i>Upload</a></li>
                     <li><a href="/prescription"><i class="fas fa-prescription"></i>Prescription</a></li>
                     <li><a href="/logout"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
-                    
+                    <li><a href="/emergency"><i class="fas fa fa-medkit" aria-hidden="true"></i>Emergency</a></li>
                 </ul> 
                 </div>
             </div>
         </div>
         <div class="pres-upload">
             <ul>
-              
-                <!-- <img id="image"
-                    src="https://images.unsplash.com/photo-1675710640218-d5329c2fdba4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8"
-                    height="100" width="100"> -->
-
                 <div class="container">
                     <div class="row">
                         <%if (records.length>0){ %>
                             <% records.forEach(function(row){ %>
-                                <div class="col-md-4">
-                                    <img src="/<%= row.imageDetails %>" alt="image" style="width:100px;margin:5px auto;">
+                                <div class="col-md-3">
+                                    <!-- <img src="/<%= row.imageDetails %>" alt="image" style="width:100px;margin:5px auto;"> -->
+                                    <a href="/<%= row.imageDetails %>" class="without-caption image-link">
+                                        <img src="/<%= row.imageDetails %>"
+                                            alt="image" style="width:200px;margin:5px auto;" />
+                                    </a>
                                 </div>
                                 <% }) }%>
                     </div>
@@ -44,6 +45,21 @@
             
         </div>
     </div>
+    <script>
+        $('.without-caption').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300 // don't foget to change the duration also in CSS
+                }
+            });
+    </script>
 
     <script>
         function show() {
