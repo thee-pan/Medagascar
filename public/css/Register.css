@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@30;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow-y: hidden;
+}
+
+input[type=radio] {
+
+    width: 10% !important;
+
+}
+
+body {
+    background-color: #0fc48b;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+section .imgBX {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+section .imgBx img {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    box-sizing: content-box;
+
+}
+
+section .contentBx {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-left: 50px;
+}
+
+section .contentBx .formBx {
+    width: 200%;
+    padding-left: 80px;
+    align-content: center;
+
+    box-sizing: 70x;
+
+}
+
+
+
+section .contentBx .formBx h2 {
+    color: #030507;
+    font-weight: 600;
+    font-size: 2.5em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: inline-block;
+    letter-spacing: 1px;
+    padding: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 100px;
+
+
+}
+
+section .contentBx .formBx .inputBx {
+    margin-bottom: 20px;
+}
+
+label {
+    display: -webkit-inline-flex;
+    width: 100px;
+    position: relative;
+
+}
+
+
+
+
+section .contentBx .formBx .inputBx input {
+    width: 50%;
+    height: 50%;
+    padding: 10px 20px;
+    outline: none;
+    font-weight: 400;
+    border: 1px solid #0a0c0e;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #030507;
+    background: transparent;
+    border-radius: 5px;
+    background-color: white;
+    box-sizing: inherit;
+
+}
+
+
+section .contentBx .formBx .inputBx input[type="submit"] {
+
+    background: white;
+    color: white;
+    outline: none;
+    border: none;
+    font-weight: 300;
+    cursor: pointer;
+    width: 30%;
+    background-color: #030507;
+    border-radius: 10px;
+
+}
+
+section .contentBx .formBx .inputBx input[type="submit"]:hover {
+    background: #a39d9f;
+}
+
+
+
+@media (max-width: 768px) {
+    section .imgBx {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 75%;
+        height: 100%;
+    }
+
+    section .contentBx {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+}

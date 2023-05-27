@@ -1,0 +1,5 @@
+node_modules
+scraper.py
+scrape.txt
+file.json
+.env
