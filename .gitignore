@@ -3,3 +3,4 @@ scraper.py
 scrape.txt
 file.json
 .env
+package-lock.json
